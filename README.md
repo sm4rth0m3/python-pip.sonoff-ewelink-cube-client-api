@@ -71,7 +71,7 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-See more in the [examples](examples) directory.
+See more in the [examples](https://github.com/sm4rth0m3/python-pip.sonoff-ewelink-cube-client-api/tree/main/examples) directory.
 
 
 ---

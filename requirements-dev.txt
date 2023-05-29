@@ -1,3 +1,4 @@
 # Requirements - DEV
+build
 pylint
 twine
