@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[metadata]
+name = "sonoff-ewelink-cube-client-api"
+version = "0.0.2"
+author = "sipimokus"
+author-email = "sipimokus@gmail.com"
+description = "SONOFF eWelink CUBE API communication library (unofficial)"
+long-description = '''
+A SONOFF eWelink CUBE API communication library (unofficial).
+
+For more information, please see the README.md file.
+'''
+
+[options]
+packages = ["src"]
+python_requires = ">=3.6"
+install_requires = [
+    "aiohttp>=3.0.0",
+    "asyncio>=3.4.3"
+]

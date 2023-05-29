@@ -79,10 +79,10 @@ See more in the [examples](examples) directory.
 
 ```sh
 # Start docker container (or use virtualenv)
-docker run -it -v "$(pwd)":/app -w /app python:3.11-slim /bin/bash
+docker run -rm -it -v "$(pwd)":/app -w /app python:3.11-slim /bin/bash
 
 # Install packages and repository
-pip3 install -r requirements.txt -r requirements-dev.txt
+pip3 install -r requirements-dev.txt
 pip3 install .
 
 # Pylint checks

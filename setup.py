@@ -1,13 +1,10 @@
 """Setup file for installing and configuring the sonoff-ewelink-cube-client-api package."""
 from setuptools import setup, find_packages
 
-VERSION = "0.0.1"
+VERSION = "0.0.2"
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
-
-with open("requirements.txt", "r", encoding="utf-8") as fh:
-    requirements = fh.read().splitlines()
 
 setup(
     name="sonoff-ewelink-cube-client-api",
@@ -44,5 +41,9 @@ setup(
     packages=find_packages("src"),
     package_dir={"": "src"},
     python_requires=">=3.6",
-    install_requires=requirements,
+    install_requires=[
+        "aiohttp>=3.0.0",
+        "asyncio>=3.4.3",
+        "setuptools",
+    ],
 )

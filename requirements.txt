@@ -1,4 +1,0 @@
-# Requirements
-aiohttp
-asyncio
-setuptools
