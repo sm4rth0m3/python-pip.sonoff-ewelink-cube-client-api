@@ -7,10 +7,10 @@ Enumerations:
     EPath: Represents various API paths.
 """
 
-from enum import Enum
+from . import BaseEnum
 
 
-class EPath(Enum):
+class EPath(BaseEnum):
     """
     Represents various API paths.
 

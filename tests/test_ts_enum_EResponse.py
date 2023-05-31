@@ -3,7 +3,9 @@ Test module for EResponseErrorCode enumeration.
 """
 
 import unittest
+
 from src.sonoff_ewelink_cube_client_api.ts.enum.EResponse import EResponseErrorCode
+
 
 class TestEResponseErrorCode(unittest.TestCase):
     """

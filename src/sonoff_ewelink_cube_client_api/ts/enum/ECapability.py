@@ -7,10 +7,10 @@ Enumerations:
     ECapability: Represents various capabilities.
 """
 
-from enum import Enum
+from . import BaseEnum
 
 
-class ECapability(Enum):
+class ECapability(BaseEnum):
     """
     Represents various capabilities.
 

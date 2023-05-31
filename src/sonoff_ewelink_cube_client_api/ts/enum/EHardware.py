@@ -1,16 +1,16 @@
 """
 Module: EHardware
 
-This module defines the EHardware classes.
+This enumeration defines different Hardware devices.
 
 Enumerations:
-    - ESpeakerTypes: Enumeration of speaker types.
+    ESpeakerTypes: Enumeration of speaker types.
 """
 
-from enum import Enum
+from . import BaseEnum
 
 
-class ESpeakerTypes(Enum):
+class ESpeakerTypes(BaseEnum):
     """
     Enumeration of speaker types.
 
@@ -18,8 +18,6 @@ class ESpeakerTypes(Enum):
         PLAY_BEEP: Play the beep.
         PLAY_SOUND: Play the sound.
     """
+
     PLAY_BEEP = "play_beep"
     PLAY_SOUND = "play_sound"
-
-    def __str__(self):
-        return self.value

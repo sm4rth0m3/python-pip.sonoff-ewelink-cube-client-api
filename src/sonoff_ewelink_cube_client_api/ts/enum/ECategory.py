@@ -7,10 +7,10 @@ Enumerations:
     ECategory: Represents various device categories.
 """
 
-from enum import Enum
+from . import BaseEnum
 
 
-class ECategory(Enum):
+class ECategory(BaseEnum):
     """
     Represents various device categories.
 

@@ -7,10 +7,10 @@ Enumerations:
     EMethod: Represents various HTTP methods.
 """
 
-from enum import Enum
+from . import BaseEnum
 
 
-class EMethod(Enum):
+class EMethod(BaseEnum):
     """
     Represents various HTTP methods.
 

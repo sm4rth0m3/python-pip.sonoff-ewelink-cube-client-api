@@ -8,6 +8,7 @@ Classes:
 """
 from . import BaseEnum
 
+
 class EResponseErrorCode(BaseEnum):
     """
     Enum class representing error codes for response objects.
