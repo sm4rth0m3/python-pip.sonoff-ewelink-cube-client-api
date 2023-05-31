@@ -7,7 +7,10 @@ import asyncio
 import json
 
 from example_helpers import load_access_token, save_access_token
+
 from sonoff_ewelink_cube_client_api import EWelinkCube
+from sonoff_ewelink_cube_client_api.ts.enum.EHardware import ESpeakerTypes
+from sonoff_ewelink_cube_client_api.ts.interface.api.IHardware import IBeepObject, ISoundObject
 
 # iHost example settings
 IHOST_BRIDGE_HOST_ADDRESS = os.getenv("IHOST_BRIDGE_HOST_ADDRESS", "ihost.local")
@@ -49,22 +52,44 @@ async def main():
         print(f'- Access token received: {access_token}')
 
     # Set volume (0 - 100)
-    set_volume = 50
+    set_volume = 80
     api_volume = await api_rest.updateBridgeConfig(volume=set_volume)
     if api_volume and not api_volume["error"]:
         print(f'- Volume set: {set_volume}%')
     else:
         print(f'- Volume set error: [{api_volume["error"]}] {api_volume["message"]}')
+    await asyncio.sleep(2)
+
+    # Use enums and interfaces for secure and validated params.
+    play_type: ESpeakerTypes = ESpeakerTypes.PLAY_SOUND
+    play_object: ISoundObject = ISoundObject(name="alert1", volume=set_volume, countdown=2)
+    print("- PLAY_SOUND", await api_rest.controlSpeaker(play_type=play_type, sound=play_object))
+    await asyncio.sleep(2)
+
+    # Or use simple strings, but it's unsecured and unvalidated (~ raw).
+    play_type = "play_beep"
+    play_object = {"name": "deviceDiscovered", "volume": set_volume}
+    print("- PLAY_BEEP", await api_rest.controlSpeaker(play_type=play_type, beep=play_object))
+    await asyncio.sleep(2)
+
 
     # iHost info
     api_bridge_info = await api_rest.getBridgeInfo()
     if api_bridge_info and not api_bridge_info["error"]:
         print(f'- Bridge info: {json.dumps(api_bridge_info, indent=PRINT_JSON_INDENT)}')
 
+
     # Devices list with some info
     api_devices_list = await api_rest.getDeviceList()
     if api_devices_list and not api_devices_list["error"]:
         print(f'- Devices list: {json.dumps(api_devices_list, indent=PRINT_JSON_INDENT)}')
+
+
+    # Good bye! :-)
+    play_type: ESpeakerTypes = ESpeakerTypes.PLAY_BEEP
+    play_object: IBeepObject = IBeepObject(name="systemShutdown", volume=set_volume)
+    print("- PLAY_BEEP", await api_rest.controlSpeaker(play_type=play_type, beep=play_object))
+    await asyncio.sleep(2)
 
 
 if __name__ == "__main__":
