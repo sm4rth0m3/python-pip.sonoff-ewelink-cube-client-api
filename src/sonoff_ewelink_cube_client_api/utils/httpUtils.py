@@ -55,7 +55,7 @@ class httpUtils(IConfig):
             headers['Authorization'] = f'Bearer {self.at}'
         _LOGGER.debug(f'httpRequest headers: {headers}')
 
-        response: IResponse = None
+        response: str = None
         async with aiohttp.ClientSession(headers=headers) as session:
             if method == EMethod.GET:
                 async with session.get(url, params=params) as resp:
@@ -74,8 +74,23 @@ class httpUtils(IConfig):
         try:
             _LOGGER.debug(f'httpRequest response: {response}')
             if response is None:
-                return {'error': -1, 'msg': 'Empty response', 'data': {}}
-            return json.loads(response)
+                return IResponse(
+                    error=-1,
+                    message='Empty response.',
+                    data={}
+                )
+
+            response_data = json.loads(response)
+            return IResponse(
+                error=response_data["error"],
+                message=response_data["message"],
+                data=response_data["data"]
+            )
+
         except json.JSONDecodeError:
             _LOGGER.error(f'httpRequest response: {response}')
-            return {'error': -1, 'msg': 'Invalid JSON response', 'data': {}}
+            return IResponse(
+                error=-1,
+                message='Invalid JSON response.',
+                data={}
+            )

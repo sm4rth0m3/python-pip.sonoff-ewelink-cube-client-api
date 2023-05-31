@@ -10,12 +10,13 @@ Usage:
     from .baseClassHardware import BaseClassHardware
 """
 
-from typing import Any, Dict, Optional, Union
+from typing import Optional, Union
 
 from ..ts.enum.EHardware import ESpeakerTypes
 from ..ts.enum.EMethod import EMethod
 from ..ts.enum.EPath import EPath
 from ..ts.interface.api.IHardware import IBeepObject, ISoundObject
+from ..ts.interface.IResponse import IResponse
 from ..utils.httpUtils import httpUtils
 
 
@@ -30,12 +31,12 @@ class BaseClassHardware(httpUtils):
 
     async def rebootBridge(
             self
-    ) -> Dict[str, Any]:
+    ) -> IResponse:
         """
-        Reboots the gateway.
+        Reboot the gateway.
 
         Returns:
-            Dict[str, Any]: Dictionary containing the response data.
+            IResponse: IResponse object containing the response data.
         """
         return await self.httpRequest(
             path=EPath.HARDWARE_REBOOT.value,
@@ -47,7 +48,7 @@ class BaseClassHardware(httpUtils):
             play_type: Union[ESpeakerTypes, str],
             sound: Optional[ISoundObject] = None,
             beep: Optional[IBeepObject] = None
-    ) -> Dict[str, Any]:
+    ) -> IResponse:
         """
         Controls the speaker.
 
@@ -57,7 +58,7 @@ class BaseClassHardware(httpUtils):
             beep (Optional[IBeepObject]): The beep object to play. Required if the play_type is 'PLAY_BEEP'.
 
         Returns:
-            Dict[str, Any]: Dictionary containing the response data.
+            IResponse: IResponse object containing the response data.
 
         Raises:
             ValueError: If the play_type is invalid.

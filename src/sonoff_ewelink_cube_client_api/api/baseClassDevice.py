@@ -14,6 +14,7 @@ from typing import Dict, Any
 
 from ..ts.enum.EMethod import EMethod
 from ..ts.enum.EPath import EPath
+from ..ts.interface.IResponse import IResponse
 from ..utils.httpUtils import httpUtils
 
 
@@ -34,7 +35,7 @@ class BaseClassDevice(httpUtils):
             Deletes a device.
     """
 
-    async def discoverySubDevices(self, params: Dict[str, Any]) -> Dict[str, Any]:
+    async def discoverySubDevices(self, params: Dict[str, Any]) -> IResponse:
         """
         Searches for sub-devices.
 
@@ -42,7 +43,7 @@ class BaseClassDevice(httpUtils):
             params (Dict[str, Any]): Parameters for the request.
 
         Returns:
-            Dict[str, Any]: Dictionary containing the response data.
+            IResponse: IResponse object containing the response data.
         """
         return await self.httpRequest(
             path=EPath.DEVICE_DISCOVERY.value,
@@ -50,7 +51,7 @@ class BaseClassDevice(httpUtils):
             params=params
         )
 
-    async def manualAddSubDevice(self, params: Dict[str, Any]) -> Dict[str, Any]:
+    async def manualAddSubDevice(self, params: Dict[str, Any]) -> IResponse:
         """
         Manually adds a sub-device (currently only supports adding RTSP cameras and ESP32 cameras).
 
@@ -58,7 +59,7 @@ class BaseClassDevice(httpUtils):
             params (Dict[str, Any]): Parameters for the request.
 
         Returns:
-            Dict[str, Any]: Dictionary containing the response data.
+            IResponse: IResponse object containing the response data.
         """
         return await self.httpRequest(
             path=EPath.DEVICE.value,
@@ -66,19 +67,19 @@ class BaseClassDevice(httpUtils):
             params=params
         )
 
-    async def getDeviceList(self) -> Dict[str, Any]:
+    async def getDeviceList(self) -> IResponse:
         """
         Gets the device list.
 
         Returns:
-            Dict[str, Any]: Dictionary containing the response data.
+            IResponse: IResponse object containing the response data.
         """
         return await self.httpRequest(
             path=EPath.DEVICE.value,
             method=EMethod.GET,
         )
 
-    async def updateDeviceState(self, serial_number: str, updateParams: Dict[str, Any]) -> Dict[str, Any]:
+    async def updateDeviceState(self, serial_number: str, updateParams: Dict[str, Any]) -> IResponse:
         """
         Updates the information or status of a specified device.
 
@@ -87,7 +88,7 @@ class BaseClassDevice(httpUtils):
             updateParams (Dict[str, Any]): Parameters for updating the device.
 
         Returns:
-            Dict[str, Any]: Dictionary containing the response data.
+            IResponse: IResponse object containing the response data.
         """
         return await self.httpRequest(
             path=f"{EPath.DEVICE.value}/{serial_number}",
@@ -95,7 +96,7 @@ class BaseClassDevice(httpUtils):
             params=updateParams
         )
 
-    async def deleteDevice(self, serial_number: str) -> Dict[str, Any]:
+    async def deleteDevice(self, serial_number: str) -> IResponse:
         """
         Deletes a device.
 
@@ -103,7 +104,7 @@ class BaseClassDevice(httpUtils):
             serial_number (str): Serial number of the device to be deleted.
 
         Returns:
-            Dict[str, Any]: Dictionary containing the response data.
+            IResponse: IResponse object containing the response data.
         """
         return await self.httpRequest(
             path=f"{EPath.DEVICE.value}/{serial_number}",

@@ -14,9 +14,10 @@ from typing import Any, Awaitable, Dict, Tuple
 
 import asyncio
 
+from ..config import Store
 from ..ts.enum.EMethod import EMethod
 from ..ts.enum.EPath import EPath
-from ..config import Store
+from ..ts.interface.IResponse import IResponse
 from ..utils.httpUtils import httpUtils
 
 
@@ -36,7 +37,7 @@ class BaseClassBridge(Store, httpUtils):
     interval = None
     timeout = None
 
-    async def getBridgeAT(self, timeout: int = 120000, interval: int = 2000) -> Dict[str, Any]:
+    async def getBridgeAT(self, timeout: int = 120000, interval: int = 2000) -> IResponse:
         """
         Gets the bridge access token.
 
@@ -80,7 +81,7 @@ class BaseClassBridge(Store, httpUtils):
         return await asyncio.wait_for(asyncio.gather(getBridgeATHandler(), intervalFunc()), timeout / 1000)
 
 
-    async def updateBridgeConfig(self, volume: int) -> Dict[str, Any]:
+    async def updateBridgeConfig(self, volume: int) -> IResponse:
         """
         Updates the gateway configuration.
 
@@ -96,7 +97,7 @@ class BaseClassBridge(Store, httpUtils):
             params={'volume': volume}
         )
 
-    async def getBridgeInfo(self) -> Dict[str, Any]:
+    async def getBridgeInfo(self) -> IResponse:
         """
         Gets the gateway information.
 

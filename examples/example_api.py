@@ -10,6 +10,7 @@ from example_helpers import load_access_token, save_access_token
 
 from sonoff_ewelink_cube_client_api import EWelinkCube
 from sonoff_ewelink_cube_client_api.ts.enum.EHardware import ESpeakerTypes
+from sonoff_ewelink_cube_client_api.ts.interface.IResponse import IResponse
 from sonoff_ewelink_cube_client_api.ts.interface.api.IHardware import IBeepObject, ISoundObject
 
 # iHost example settings
@@ -53,7 +54,8 @@ async def main():
 
     # Set volume (0 - 100)
     set_volume = 80
-    api_volume = await api_rest.updateBridgeConfig(volume=set_volume)
+    api_volume: IResponse = await api_rest.updateBridgeConfig(volume=set_volume)
+
     if api_volume and not api_volume["error"]:
         print(f'- Volume set: {set_volume}%')
     else:
@@ -74,15 +76,15 @@ async def main():
 
 
     # iHost info
-    api_bridge_info = await api_rest.getBridgeInfo()
+    api_bridge_info: IResponse = await api_rest.getBridgeInfo()
     if api_bridge_info and not api_bridge_info["error"]:
-        print(f'- Bridge info: {json.dumps(api_bridge_info, indent=PRINT_JSON_INDENT)}')
+        print(f'- Bridge info: {api_bridge_info}')
 
 
     # Devices list with some info
-    api_devices_list = await api_rest.getDeviceList()
+    api_devices_list: IResponse = await api_rest.getDeviceList()
     if api_devices_list and not api_devices_list["error"]:
-        print(f'- Devices list: {json.dumps(api_devices_list, indent=PRINT_JSON_INDENT)}')
+        print(f'- Devices list: {api_devices_list}')
 
 
     # Good bye! :-)
