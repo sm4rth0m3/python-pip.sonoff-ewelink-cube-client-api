@@ -49,7 +49,7 @@ class BaseClassSse(Store):
 
         _LOGGER.debug('Initialize SSE session.')
 
-        # Set session
+        # Set session
         self.session = session if session is not None else aiohttp.ClientSession()
 
         # Set SSE event listeners

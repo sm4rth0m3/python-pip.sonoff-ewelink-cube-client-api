@@ -23,15 +23,15 @@ class BaseClassDevice(httpUtils):
     Represents the BaseClassDevice API.
 
     Methods:
-        discoverySubDevices(params: Dict[str, Any]) -> Dict[str, Any]: 
+        discoverySubDevices(params: Dict[str, Any]) -> Dict[str, Any]:
             Searches for sub-devices.
-        manualAddSubDevice(params: Dict[str, Any]) -> Dict[str, Any]: 
+        manualAddSubDevice(params: Dict[str, Any]) -> Dict[str, Any]:
             Manually adds a sub-device.
-        getDeviceList() -> Dict[str, Any]: 
+        getDeviceList() -> Dict[str, Any]:
             Gets the device list.
-        updateDeviceState(serial_number: str, updateParams: Dict[str, Any]) -> Dict[str, Any]: 
+        updateDeviceState(serial_number: str, updateParams: Dict[str, Any]) -> Dict[str, Any]:
             Updates the status of a specified device.
-        deleteDevice(serial_number: str) -> Dict[str, Any]: 
+        deleteDevice(serial_number: str) -> Dict[str, Any]:
             Deletes a device.
     """
 

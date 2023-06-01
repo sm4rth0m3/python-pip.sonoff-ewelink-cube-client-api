@@ -55,7 +55,7 @@ async def main():
     else:
         print(f'- Volume set error: [{api_volume["error"]}] {api_volume["message"]}')
 
-    # iHost info
+    # iHost info
     api_bridge_info = await api_rest.getBridgeInfo()
     if api_bridge_info and not api_bridge_info["error"]:
         print(f'- Bridge info: {json.dumps(api_bridge_info, indent=PRINT_JSON_INDENT)}')

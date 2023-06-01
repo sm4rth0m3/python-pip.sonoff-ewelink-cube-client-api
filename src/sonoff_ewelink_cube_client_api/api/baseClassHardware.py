@@ -67,7 +67,7 @@ class BaseClassHardware(httpUtils):
         """
         play_type = str(play_type)
 
-        # Validate input
+        # Validate input
         if play_type not in [speaker_type.value for speaker_type in ESpeakerTypes]:
             raise ValueError(f"Invalid play_type value: {play_type}")
         if play_type == ESpeakerTypes.PLAY_SOUND.value and sound is None:

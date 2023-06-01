@@ -4,7 +4,6 @@ Example module for handling Open API from Sonoff eWeLink Cube API.
 
 import os
 import asyncio
-import json
 
 from example_helpers import load_access_token, save_access_token
 
@@ -68,7 +67,7 @@ async def main():
     print("- PLAY_SOUND", await api_rest.controlSpeaker(play_type=play_type, sound=play_object))
     await asyncio.sleep(2)
 
-    # Or use simple strings, but it's unsecured and unvalidated (~ raw).
+    # Or use simple strings, but it's unsecured and unvalidated (~ raw).
     play_type = "play_beep"
     play_object = {"name": "deviceDiscovered", "volume": set_volume}
     print("- PLAY_BEEP", await api_rest.controlSpeaker(play_type=play_type, beep=play_object))
@@ -87,7 +86,7 @@ async def main():
         print(f'- Devices list: {api_devices_list}')
 
 
-    # Good bye! :-)
+    # Good bye! :-)
     play_type: ESpeakerTypes = ESpeakerTypes.PLAY_BEEP
     play_object: IBeepObject = IBeepObject(name="systemShutdown", volume=set_volume)
     print("- PLAY_BEEP", await api_rest.controlSpeaker(play_type=play_type, beep=play_object))
