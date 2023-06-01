@@ -1,4 +1,7 @@
-"""Setup file for installing and configuring the sonoff-ewelink-cube-client-api package."""
+"""
+Setup file for installing and configuring the sonoff-ewelink-cube-client-api package.
+"""
+
 from setuptools import setup, find_packages
 
 VERSION = "0.0.2"
@@ -31,7 +34,7 @@ setup(
         # "Programming Language :: Python :: 3.8",
         # "Programming Language :: Python :: 3.9",
         # "Programming Language :: Python :: 3.10",
-        # "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.11",
         "Topic :: Home Automation",
         "Topic :: Software Development :: Libraries :: Python Modules",
         "Topic :: System :: Networking",
@@ -43,7 +46,6 @@ setup(
     python_requires=">=3.6",
     install_requires=[
         "aiohttp>=3.0.0",
-        "asyncio>=3.4.3",
-        "setuptools",
+        "asyncio>=3.4.3"
     ],
 )

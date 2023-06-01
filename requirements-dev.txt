@@ -1,4 +1,16 @@
-# Requirements - DEV
+#
+# Requirements file for python pip packages - DEV
+#
+
+# Build pip package
 build
-pylint
 twine
+setuptools
+wheel
+
+# Code quality
+coverage
+invoke
+mypi
+pre-commit
+pylint

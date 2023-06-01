@@ -1,0 +1,23 @@
+/*
+.devcontainer settings file for sm4rth0m3/python-pip.sonoff-ewelink-cube-client-api
+*/
+{
+  "name": "Python Dev Container",
+  "context": "..",
+  "dockerFile": "./Dockerfile.dev",
+  "postCreateCommand": ".devcontainer/script/setup.sh",
+  "postStartCommand": ".devcontainer/script/bootstrap.sh",
+  "containerEnv": {
+    "DEVCONTAINER": "1"
+  },
+  "shutdownAction": "none",
+  "extensions": [
+    "ms-python.python"
+  ],
+  "settings": {
+    "python.pythonPath": "/usr/local/bin/python",
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.pylintPath": "/usr/local/bin/pylint"
+  }
+}

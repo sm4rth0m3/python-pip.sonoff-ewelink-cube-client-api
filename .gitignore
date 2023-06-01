@@ -1,3 +1,7 @@
+#
+# .gitignore file for sm4rth0m3/python-pip.sonoff-ewelink-cube-client-api
+#
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

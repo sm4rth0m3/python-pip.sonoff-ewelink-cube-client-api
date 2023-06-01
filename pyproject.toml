@@ -1,3 +1,7 @@
+#
+# Setup file for installing and configuring the sonoff-ewelink-cube-client-api package.
+#
+
 [build-system]
 requires = ["setuptools>=42", "wheel"]
 build-backend = "setuptools.build_meta"

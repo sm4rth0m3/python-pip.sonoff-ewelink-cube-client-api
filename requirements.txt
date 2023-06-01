@@ -1,0 +1,6 @@
+#
+# Requirements file for python packages
+#
+
+aiohttp>=3.0.0
+asyncio>=3.4.3
