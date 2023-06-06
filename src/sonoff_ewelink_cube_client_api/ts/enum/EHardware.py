@@ -18,6 +18,5 @@ class ESpeakerTypes(BaseEnum):
         PLAY_BEEP: Play the beep.
         PLAY_SOUND: Play the sound.
     """
-
     PLAY_BEEP = "play_beep"
     PLAY_SOUND = "play_sound"

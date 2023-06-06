@@ -10,9 +10,11 @@ Classes:
 from typing import Any
 
 from ..enum.EResponse import EResponseErrorCode
+from . import BaseInterface
 
+from ..error.EDiscoveryDevice import EDiscoveryDeviceError
 
-class IResponse:
+class IResponse(BaseInterface):
     """
     Represents a response object.
 
@@ -22,13 +24,10 @@ class IResponse:
         data (any): The data of the response.
     """
 
-    VALID_ERROR_CODES = [
-        EResponseErrorCode.ERROR_CUSTOM.value,
-        EResponseErrorCode.ERROR_SUCCESS.value,
-        EResponseErrorCode.ERROR_PARAMETER.value,
-        EResponseErrorCode.ERROR_AUTHENTICATION.value,
-        EResponseErrorCode.ERROR_SERVER_EXCEPTION.value
-    ]
+    VALID_ERROR_CODES = {
+        EResponseErrorCode: [device.value for device in EResponseErrorCode],
+        EDiscoveryDeviceError: [device.value for device in EDiscoveryDeviceError],
+    }
 
     def __init__(self, error: int, message: str, data: Any):
         """
@@ -60,9 +59,12 @@ class IResponse:
         """
         if not isinstance(error, int):
             raise ValueError("Error code must be an integer.")
-        if error not in self.VALID_ERROR_CODES:
-            raise ValueError(f"Invalid error code: {error}")
-        return error
+
+        for error_codes in self.VALID_ERROR_CODES:
+            if error in [code.value for code in error_codes]:
+                return error
+
+        raise ValueError(f"Invalid error code: {error}")
 
     def _validate_message(self, message: str) -> str:
         """
@@ -80,6 +82,12 @@ class IResponse:
             ValueError: If the message is inconsistent with the error code.
         """
         if not message:
+            for error_codes in self.VALID_ERROR_CODES:
+                if self.error in [code.value for code in error_codes]:
+                    error_code = self.error
+                    error_message = error_codes.get_error_message(error_code=self.error)
+                    raise ValueError(f'Error {error_code}: {error_message}')
+
             raise ValueError("Message cannot be empty.")
 
         if not isinstance(message, str):

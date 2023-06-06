@@ -16,6 +16,10 @@ from typing import Optional, List
 from ..enum.ECapability import ECapability
 from ..enum.ECategory import ECategory
 
+#pylint: disable-msg=unused-import
+from .api.IDevicesDiscoveryRequest import IDevicesDiscoveryRequest, EDiscoveryDevicesType
+
+
 
 class ICapability:
     """

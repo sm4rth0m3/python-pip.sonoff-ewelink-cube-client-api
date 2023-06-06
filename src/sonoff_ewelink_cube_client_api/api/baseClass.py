@@ -16,6 +16,7 @@ import logging
 
 from ..ts.enum.EMethod import EMethod
 from ..ts.enum.EPath import EPath
+from ..ts.interface.IResponse import IResponse
 
 from .baseClassBridge import BaseClassBridge
 from .baseClassDevice import BaseClassDevice
@@ -97,7 +98,7 @@ class BaseClass(BaseClassBridge, BaseClassDevice, BaseClassHardware, BaseClassSs
         """
         return self.at
 
-    async def sendCommandToDevice(self, deviceId: str, command: Dict[str, Any]) -> Dict[str, Any]:
+    async def sendCommandToDevice(self, deviceId: str, command: Dict[str, Any]) -> IResponse:
         """
         Updates specific device information or state.
 
@@ -106,7 +107,7 @@ class BaseClass(BaseClassBridge, BaseClassDevice, BaseClassHardware, BaseClassSs
             command (Dict[str, Any]): Command to be sent to the device.
 
         Returns:
-            Dict[str, Any]: Dictionary containing the response data.
+            IResponse: IResponse object containing the response data.
         """
         return await self.httpRequest(
             path=EPath.DEVICE.value,
@@ -114,7 +115,7 @@ class BaseClass(BaseClassBridge, BaseClassDevice, BaseClassHardware, BaseClassSs
             params={'deviceId': deviceId, 'command': command}
         )
 
-    async def getDebugLog(self) -> Dict[str, Any]:
+    async def getDebugLog(self, serial_number, params) -> IResponse:
         """
         Gets the debug log interface.
 
@@ -122,6 +123,7 @@ class BaseClass(BaseClassBridge, BaseClassDevice, BaseClassHardware, BaseClassSs
             Dict[str, Any]: Dictionary containing the response data.
         """
         return await self.httpRequest(
-            path=EPath.DEBUG_LOG.value,
-            method=EMethod.GET
+            path=f'{EPath.DEBUG_LOG.value}/{serial_number}',
+            method=EMethod.GET,
+            params=params
         )

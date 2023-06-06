@@ -33,7 +33,8 @@ class httpUtils(IConfig):
         path: str,
         method: EMethod,
         params: Optional[Dict[str, Any]] = None,
-        isNeedAT: bool = True
+        isNeedAT: bool = True,
+        headers: Optional[Dict[str, str]] = None,
     ) -> IResponse:
         """
         Makes an HTTP request.
@@ -43,6 +44,7 @@ class httpUtils(IConfig):
             method (EMethod): HTTP method.
             params (Optional[Dict[str, Any]]): Request parameters (default: None).
             isNeedAT (bool): Flag to indicate if access token is required (default: True).
+            headers (Optional[Dict[str, str]]): Additional headers to include in the request (default: None).
 
         Returns:
             IResponse: Dictionary containing the response data.
@@ -50,15 +52,34 @@ class httpUtils(IConfig):
         url = f"http://{self.ip}{EPath.ROOT.value}{EPath.V1.value}{path}"
         _LOGGER.debug(f'httpRequest {method}: {url}')
 
-        headers = {'Content-Type': 'application/json'}
+        headers = headers or {'Content-Type': 'application/json'}
         if isNeedAT and self.at:
             headers['Authorization'] = f'Bearer {self.at}'
         _LOGGER.debug(f'httpRequest headers: {headers}')
+        _LOGGER.debug(f'httpRequest params: {params}')
 
         response: str = None
-        async with aiohttp.ClientSession(headers=headers) as session:
+        async with aiohttp.ClientSession(headers=headers, conn_timeout=10, read_timeout=10) as session:
             if method == EMethod.GET:
                 async with session.get(url, params=params) as resp:
+                    # FILE format
+                    if resp.headers.get("Content-Type") == "application/octet-stream":
+                        if resp.status == 200:
+                            # Successful response
+                            return await resp.read()
+
+                        if resp.status == 400:
+                            # Parameter error
+                            raise ValueError("Parameter error: " + await resp.text())
+
+                        if resp.status == 500:
+                            # Gateway service exception
+                            raise RuntimeError("Gateway service exception: " + await resp.text())
+
+                        # Other status codes
+                        raise RuntimeError(f"Unexpected response: {resp.status} {await resp.text()}")
+
+                    # JSON format
                     response = await resp.text()
             elif method == EMethod.POST:
                 params = {} if not params else params
@@ -72,6 +93,7 @@ class httpUtils(IConfig):
                     response = await resp.text()
 
         try:
+            _LOGGER.debug("Unhandled response, exceptions.")
             _LOGGER.debug(f'httpRequest response: {response}')
             if response is None:
                 return IResponse(
@@ -83,8 +105,8 @@ class httpUtils(IConfig):
             response_data = json.loads(response)
             return IResponse(
                 error=response_data["error"],
-                message=response_data["message"],
-                data=response_data["data"]
+                message=response_data["message"] if "message" in response_data else None,
+                data=response_data["data"] if "data" in response_data else None
             )
 
         except json.JSONDecodeError:

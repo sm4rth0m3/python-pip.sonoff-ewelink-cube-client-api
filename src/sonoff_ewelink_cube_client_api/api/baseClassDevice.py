@@ -10,11 +10,12 @@ Usage:
     from .baseClassDevice import BaseClassDevice
 """
 
-from typing import Dict, Any
+from typing import Dict, Any, Union
 
 from ..ts.enum.EMethod import EMethod
 from ..ts.enum.EPath import EPath
 from ..ts.interface.IResponse import IResponse
+from ..ts.interface.api.IDevicesDiscoveryRequest import IDevicesDiscoveryRequest
 from ..utils.httpUtils import httpUtils
 
 
@@ -35,7 +36,7 @@ class BaseClassDevice(httpUtils):
             Deletes a device.
     """
 
-    async def discoverySubDevices(self, params: Dict[str, Any]) -> IResponse:
+    async def discoverySubDevices(self, params: Union[IDevicesDiscoveryRequest, Dict[str, Any]]) -> IResponse:
         """
         Searches for sub-devices.
 
@@ -45,6 +46,12 @@ class BaseClassDevice(httpUtils):
         Returns:
             IResponse: IResponse object containing the response data.
         """
+        if isinstance(params, IDevicesDiscoveryRequest):
+            params = {
+                'enable': params.enable,
+                'type': params.device_type
+            }
+
         return await self.httpRequest(
             path=EPath.DEVICE_DISCOVERY.value,
             method=EMethod.PUT,
