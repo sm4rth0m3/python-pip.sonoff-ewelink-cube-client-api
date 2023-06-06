@@ -1,12 +1,14 @@
 """
 Example module for handling SSE events from Sonoff eWeLink Cube API.
 """
+# pylint: disable=duplicate-code
 
 import os
 import asyncio
 
-from example_helpers import load_access_token
 from sonoff_ewelink_cube_client_api import EWelinkCube
+
+from .example_helpers import load_access_token
 
 # iHost example settings
 IHOST_BRIDGE_HOST_ADDRESS = os.getenv("IHOST_BRIDGE_HOST_ADDRESS", "ihost.local")

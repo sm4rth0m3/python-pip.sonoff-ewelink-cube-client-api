@@ -2,9 +2,18 @@
 
 SONOFF eWelink CUBE API communication library (unofficial)
 
+
+⚠️ The project is still under active development.
+
+
 Supported devices:
 - SONOFF iHost
 - SONOFF NSPanel Pro (untested)
+
+Features:
+- Request objects for validated params usage.
+- Response objects for parsing response as object, json or text.
+
 
 ### What is eWeLink CUBE?
 
@@ -46,14 +55,6 @@ async def main():
     print(f'- Access token process: press link button on iHost device!')
     access_token = await api_rest.getBridgeAT()
     print(f'- Access token request: {access_token}')
-
-    # Set volume (0 - 100)
-    set_volume = 50
-    api_volume = await api_rest.updateBridgeConfig(volume=set_volume)
-    if api_volume and not api_volume["error"]:
-        print(f'- Volume set: {set_volume}%')
-    else:
-        print(f'- Volume set error: [{api_volume["error"]}] {api_volume["message"]}')
 
     # iHost info
     api_bridge_info = await api_rest.getBridgeInfo()
@@ -104,14 +105,19 @@ Tested devices:
 ---
 ## Roadmap
 
-✓ Integrated an API source from [npm](https://www.npmjs.com/package/node-red-contrib-ewelink-cube) into Python
+✓ Ready:
+- Integrated an API source from [npm](https://www.npmjs.com/package/node-red-contrib-ewelink-cube) into Python
+- Git pre-hooks, code quality tools
 
-🔧 Fantastic features in the future: ;-)
+
+🔧 In-progress:
 - Create objects interfaces / enums by API documentation (payload, beep, etc...)
+
+
+🚀 Fantastic features in the future: ;-)
 - Create additional API methods (non Open API, ex.: docker)
 - Create test suites (unit / mock)
 - CI/CD (ex.: Github or Travis)
-- Git pre-hooks
 - Errors handling
 
 ---
@@ -121,3 +127,6 @@ Tested devices:
 - https://ewelink.cc/ewelink-cube/open-api/
 - https://sonoff.tech/ihost-user-guides/api/
 - https://www.npmjs.com/package/node-red-contrib-ewelink-cube
+- https://appcms.coolkit.cn/feed
+- https://appcms.coolkit.cn/ai-bridge/changelog-aibridge/feed
+- https://github.com/CoolKit-Technologies/cc.ewelink.smart.home.addon/tree/main/web/src/api

@@ -1,6 +1,7 @@
 """
 Helper functions for examples.
 """
+# pylint: disable=duplicate-code
 
 import os
 import base64
@@ -19,6 +20,7 @@ def encode_ip_to_hash(ip_or_host: str) -> str:
     encoded_id = base64.b64encode(ip_or_host.encode()).decode()
     return encoded_id[:8]
 
+
 def save_access_token(host_address: str, access_token: str) -> None:
     """
     Save access token to a file.
@@ -33,6 +35,9 @@ def save_access_token(host_address: str, access_token: str) -> None:
 
     with open(file_path, "w", encoding="utf-8") as file:
         file.write(access_token)
+
+    return file_path
+
 
 def load_access_token(host_address: str) -> str:
     """
